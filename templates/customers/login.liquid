@@ -1,0 +1,63 @@
+<h2>{{ 'customer.login_page.title' | t }}</h2>
+{%- form 'customer_login', novalidate: 'novalidate' -%}
+  {%- if form.errors -%}
+    {{ form.errors | default_errors }}
+  {%- endif -%}
+  <input
+    type="email"
+    name="customer[email]"
+    id="CustomerEmail"
+    autocomplete="email"
+    autocorrect="off"
+    autocapitalize="off"
+    {% if form.errors contains 'form' %}
+      aria-invalid="true"
+    {% endif %}
+    placeholder="{{ 'customer.login_page.email' | t }}"
+  >
+  <label for="CustomerEmail">
+    {{ 'customer.login_page.email' | t }}
+  </label>
+  {%- if form.password_needed -%}
+    <input
+      type="password"
+      value=""
+      name="customer[password]"
+      id="CustomerPassword"
+      autocomplete="current-password"
+      {% if form.errors contains 'form' %}
+        aria-invalid="true"
+      {% endif %}
+      placeholder="{{ 'customer.login_page.password' | t }}"
+    >
+    <label for="CustomerPassword">
+      {{ 'customer.login_page.password' | t }}
+    </label>
+  {%- endif -%}
+
+  <button>{{ 'customer.login_page.sign_in' | t }}</button>
+{%- endform -%}
+{%- form 'recover_customer_password' -%}
+  <h3>{{ 'customer.login_page.recover_title' | t }}</h3>
+  {%- assign recover_success = form.posted_successfully? -%}
+  {%- if form.errors -%}
+    {{ form.errors | default_errors }}
+  {%- endif -%}
+  <input
+    type="email"
+    name="customer[email]"
+    id="RecoverEmail"
+    autocomplete="email"
+    autocorrect="off"
+    autocapitalize="off"
+    {% if form.errors contains 'form' %}
+      aria-invalid="true"
+    {% endif %}
+    placeholder="{{ 'customer.login_page.email' | t }}"
+  >
+  <label for="RecoverEmail">
+    {{ 'customer.login_page.email' | t }}
+  </label>
+
+  <button>{{ 'customer.login_page.recover_submit' | t }}</button>
+{%- endform -%}

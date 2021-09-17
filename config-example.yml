@@ -1,0 +1,8 @@
+development:
+  password: pwd
+  theme_id: "1"
+  store: store.myshopify.com
+  ignore_files:
+    - config/settings_data.json # Uncomment this line to avoid resetting theme settings
+    - config-example.yml
+    - readme.md

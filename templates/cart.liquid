@@ -1,0 +1,113 @@
+{%- if cart.items.size > 0 -%}
+<h2>{{ 'cart.general.title' | t }}</h2>
+<form action="{{ routes.cart_url }}" method="post" novalidate>
+  <table>
+    <thead>
+      <tr>
+        <th>{{ 'cart.general.product' | t }}</th>
+        <th>{{ 'cart.general.line_item_price' | t }}</th>
+        <th>{{ 'cart.general.quantity' | t }}</th>
+        <th>{{ 'cart.general.line_item_total' | t }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for item in cart.items -%}
+        <tr>
+          <td>
+            <a href="{{ item.url }}">
+              {%- if item.image -%}
+                <img
+                  src="{{ item.image | img_url: '300x' }}"
+                  alt="{{ item.image.alt | strip_html | escape }}"
+                  loading="lazy"
+                  width="150"
+                  height="{{ 150 | divided_by: item.image.aspect_ratio | ceil }}"
+                >
+              {%- endif -%}
+              {{ item.product.title | escape }}
+            </a>
+            {%- if item.discounts -%}
+              <ul role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                {%- for discount in item.discounts -%}
+                  <li class="discounts__discount">
+                    {{ discount.title }}
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </td>
+          <td>
+            {%- if item.original_line_price != item.final_line_price -%}
+              <dl>
+                <dt class="sr-only">
+                  {{ 'products.product.price.regular_price' | t }}
+                </dt>
+                <dd>
+                  <s>
+                    {{ item.original_line_price | money }}
+                  </s>
+                </dd>
+                <dt class="sr-only">
+                  {{ 'products.product.price.sale_price' | t }}
+                </dt>
+                <dd>
+                  {{ item.final_line_price | money }}
+                </dd>
+              </dl>
+            {%- else -%}
+              <p>
+                {{ item.original_line_price | money }}
+              </p>
+            {%- endif -%}
+          </td>
+          <td>
+            <input
+              type="number"
+              name="updates[]"
+              value="{{ item.quantity }}"
+              min="0"
+              aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+              id="Quantity-{{ item.index | plus: 1 }}"
+            >
+          </td>
+          <td>
+            {%- if item.original_line_price != item.final_line_price -%}
+              <dl>
+                <dt class="sr-only">
+                  {{ 'products.product.price.regular_price' | t }}
+                </dt>
+                <dd>
+                  <s>
+                    {{ item.original_line_price | money }}
+                  </s>
+                </dd>
+                <dt class="sr-only">
+                  {{ 'products.product.price.sale_price' | t }}
+                </dt>
+                <dd>
+                  {{ item.final_line_price | money }}
+                </dd>
+              </dl>
+            {%- else -%}
+              <span>
+                {{ item.original_line_price | money }}
+              </span>
+            {%- endif -%}
+          </td>
+        </tr>
+      {%- endfor -%}
+    </tbody>
+  </table>
+  <div>
+    <a href="{{ routes.cart_clear_url }}">
+      {{ 'cart.general.clear' | t }}
+    </a>
+    <button type="submit" name="update">
+      <span>{{ 'cart.general.update' | t }}</span>
+    </button>
+  </div>
+  <div>
+    <button type="submit" name="checkout">{{ 'cart.general.checkout' | t }}</button>
+  </div>
+</form>
+{%- endif -%}

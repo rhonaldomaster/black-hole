@@ -1,0 +1,28 @@
+{%- assign template_name = template_name | default: '' -%}
+{%- assign template_suffix = template_suffix | default: '' -%}
+{%- comment -%}
+  fonts
+  {% render 'font-faces' %}
+{%- endcomment -%}
+<style>
+.sr-only {
+  border: 0;
+  clip: rect(0,0,0,0);
+  display: block;
+  font-size: 1px;
+  height: 1px;
+  line-height: 1px;
+  margin: -1px 0 0 -1px;
+  outline: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+</style>
+{%- comment -%}critical css for each page/template, if you wish{%- endcomment -%}
+{%- if template_name == 'index' -%}
+  {%- comment -%}
+    <style></style>
+  {%- endcomment -%}
+{%- endif -%}

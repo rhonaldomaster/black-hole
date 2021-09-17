@@ -1,0 +1,63 @@
+<h2>{{ 'customer.register.title' | t }}</h2>
+{%- form 'create_customer', novalidate: 'novalidate' -%}
+  {%- if form.errors -%}
+    {{ form.errors | default_errors }}
+  {%- endif -%}
+  <div>
+    <input
+      type="text"
+      name="customer[first_name]"
+      id="RegisterForm-FirstName"
+      {% if form.first_name %}value="{{ form.first_name }}"{% endif %}
+      autocomplete="given-name"
+      placeholder="{{ 'customer.register.first_name' | t }}"
+    >
+    <label for="RegisterForm-FirstName">
+      {{ 'customer.register.first_name' | t }}
+    </label>
+  </div>
+  <div>
+    <input
+      type="text"
+      name="customer[last_name]"
+      id="RegisterForm-LastName"
+      {% if form.last_name %}value="{{ form.last_name }}"{% endif %}
+      autocomplete="family-name"
+      placeholder="{{ 'customer.register.last_name' | t }}"
+    >
+    <label for="RegisterForm-LastName">
+      {{ 'customer.register.last_name' | t }}
+    </label>
+  </div>
+  <div>
+    <input
+      type="email"
+      name="customer[email]"
+      id="RegisterForm-email"
+      {% if form.email %} value="{{ form.email }}"{% endif %}
+      spellcheck="false"
+      autocapitalize="off"
+      autocomplete="email"
+      aria-required="true"
+      placeholder="{{ 'customer.register.email' | t }}"
+    >
+    <label for="RegisterForm-email">
+      {{ 'customer.register.email' | t }}
+    </label>
+  </div>
+  <div>
+    <input
+      type="password"
+      name="customer[password]"
+      id="RegisterForm-password"
+      aria-required="true"
+      placeholder="{{ 'customer.register.password' | t }}"
+    >
+    <label for="RegisterForm-password">
+      {{ 'customer.register.password' | t }}
+    </label>
+  </div>
+  <button>
+    {{ 'customer.register.submit' | t }}
+  </button>
+{%- endform -%}

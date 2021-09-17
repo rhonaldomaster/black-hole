@@ -1,0 +1,41 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<section itemscope itemtype="http://schema.org/Product">
+  <meta itemprop="name" content="{{ product.title }}">
+  <meta itemprop="brand" content="{{ product.vendor }}">
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+  <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code }}">
+  <link itemprop="availability" href="http://schema.org/{% if current_variant.available %}InStock{% else %}OutOfStock{% endif %}">
+
+  <h2>{{ product.title }}</h2>
+  <ul role="list">
+    {%- for image in product.images -%}
+      <li>
+        <img
+          src="{{ image | img_url: '200x200' }}"
+          alt="{{ image.alt | escape }}"
+          loading="lazy">
+      </li>
+    {%- endfor -%}
+  </ul>
+  {%- if current_variant.compare_at_price_max > current_variant.price -%}
+    <dl>
+      <dt class="sr-only">
+        {{ 'products.product.price.regular_price' | t }}
+      </dt>
+      <dd>
+        <s>
+          {{ current_variant.compare_at_price_max | money }}
+        </s>
+      </dd>
+      <dt class="sr-only">
+        {{ 'products.product.price.sale_price' | t }}
+      </dt>
+      <dd itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
+        {{ current_variant.price | money }}
+      </dd>
+    </dl>
+  {%- else -%}
+    <p itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}"></p>
+  {%- endif -%}
+</section>

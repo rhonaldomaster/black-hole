@@ -1,0 +1,20 @@
+<h2{% unless section.settings.show_title %} class="sr-only"{% endunless %}>{{ collection.title }}</h2>
+{{ section.settings.image | img_url: 'master' | img_tag }}
+{% schema %}
+{
+  "name": "Collection hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show title"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    }
+  ]
+}
+{% endschema %}
